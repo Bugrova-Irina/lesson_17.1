@@ -53,3 +53,24 @@ def test_user_task_list_setter_periodic_task(first_user, task_periodic1):
     print(isinstance(task_periodic1, Task))
     first_user.task_list = task_periodic1
     assert first_user.task_in_list[-1].name == "Купить огурцы"
+
+
+def test_middle_runtime(first_user, user_without_task):
+    assert first_user.middle_task_run_time() == 45
+    assert user_without_task.middle_task_run_time() == 0
+
+
+def test_custom_exception(capsys, first_user):
+    assert len(first_user.task_in_list) == 2
+
+    task_add = Task("Купить огурцы", "Купить огурцы для салата", created_at="22.01.2025")
+    first_user.task_list = task_add
+    message = capsys.readouterr()
+    assert message.out.streap().split('\n')[-2] == "Нельзя задать задачу с нулевым временем выполнения"
+    assert message.out.streap().split('\n')[-1] == "Обработка добавления задачи завершена"
+
+    task_add = Task("Купить огурцы", "Купить огурцы для салата", created_at="22.01.2025", run_time=60)
+    first_user.task_list = task_add
+    message = capsys.readouterr()
+    assert message.out.streap().split('\n')[-2] == "Задача добавлена успешно"
+    assert message.out.streap().split('\n')[-1] == "Обработка добавления задачи завершена"
