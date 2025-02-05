@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "lesson-17-1"
+version = "0.1.0"
+description = ""
+authors = ["Bugrova Irina <bugrova147@yandex.ru>"]
+readme = "README.md"
+packages = [{include = "lesson_17"}]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
